@@ -2722,24 +2722,24 @@ func (f *Fs) PublicLink(ctx context.Context, remote string, expire fs.Duration, 
 		id = shortcutID(o.(fs.IDer).ID())
 	}
 
-	permission := &drive.Permission{
-		AllowFileDiscovery: false,
-		Role:               "reader",
-		Type:               "anyone",
-	}
-
-	err = f.pacer.Call(func() (bool, error) {
-		// TODO: On TeamDrives this might fail if lacking permissions to change ACLs.
-		// Need to either check `canShare` attribute on the object or see if a sufficient permission is already present.
-		_, err = f.svc.Permissions.Create(id, permission).
-			Fields("").
-			SupportsAllDrives(true).
-			Context(ctx).Do()
-		return f.shouldRetry(ctx, err)
-	})
-	if err != nil {
-		return "", err
-	}
+	//permission := &drive.Permission{
+	//	AllowFileDiscovery: false,
+	//	Role:               "reader",
+	//	Type:               "anyone",
+	//}
+	//
+	//err = f.pacer.Call(func() (bool, error) {
+	//	// TODO: On TeamDrives this might fail if lacking permissions to change ACLs.
+	//	// Need to either check `canShare` attribute on the object or see if a sufficient permission is already present.
+	//	_, err = f.svc.Permissions.Create(id, permission).
+	//		Fields("").
+	//		SupportsAllDrives(true).
+	//		Context(ctx).Do()
+	//	return f.shouldRetry(ctx, err)
+	//})
+	//if err != nil {
+	//	return "", err
+	//}
 	return fmt.Sprintf("https://drive.google.com/open?id=%s", id), nil
 }
 
